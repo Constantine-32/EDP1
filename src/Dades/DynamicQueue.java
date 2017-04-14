@@ -28,19 +28,17 @@ public class DynamicQueue<E> implements TADGenericQueue<E> {
 
   @Override
   public E remove() throws CuaBuida {
-    if (!isEmpty()) {
-      E aux = head.getItem();
-      head = head.getNext();
-      size--;
-      return aux;
-    } else throw new CuaBuida();
+    if (isEmpty()) throw new CuaBuida();
+    E aux = head.getItem();
+    head = head.getNext();
+    size--;
+    return aux;
   }
 
   @Override
   public E peek() throws CuaBuida {
-    if (!isEmpty()) {
-      return head.getItem();
-    } else throw new CuaBuida();
+    if (isEmpty()) throw new CuaBuida();
+    return head.getItem();
   }
 
   @Override
@@ -58,19 +56,16 @@ public class DynamicQueue<E> implements TADGenericQueue<E> {
     return size;
   }
 
-  /**
-   * Retorna una string que representa aquesta coleccio.
-   * @return una string que representa aquesta coleccio
-   */
+  @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append('[');
+    if (isEmpty()) return "[]";
+    StringBuilder sb = new StringBuilder(size * 10).append('[');
     Node<E> aux = head;
-    while (aux != null) {
-      sb.append(aux.getItem());
+    while (aux.getNext() != null) {
+      sb.append(aux.getItem().toString()).append(',').append(' ');
       aux = aux.getNext();
-      if (aux != null) sb.append(',').append(' ');
     }
-    return sb.append(']').toString();
+    sb.append(aux.getItem().toString()).append(']');
+    return sb.toString();
   }
 }

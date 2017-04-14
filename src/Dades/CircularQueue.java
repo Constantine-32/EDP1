@@ -16,27 +16,24 @@ public class CircularQueue<E> implements TADGenericQueue<E> {
 
   @Override
   public void add(E e) throws CuaPlena {
-    if (!isFull()) {
-      list[(head + size) % list.length] = e;
-      size++;
-    } else throw new CuaPlena();
+    if (isFull()) throw new CuaPlena();
+    list[(head + size) % list.length] = e;
+    size++;
   }
 
   @Override
   public E remove() throws CuaBuida {
-    if (!isEmpty()) {
-      E aux = list[head];
-      head = (head + 1) % list.length;
-      size--;
-      return aux;
-    } else throw new CuaBuida();
+    if (isEmpty()) throw new CuaBuida();
+    E aux = list[head];
+    head = (head + 1) % list.length;
+    size--;
+    return aux;
   }
 
   @Override
   public E peek() throws CuaBuida {
-    if (!isEmpty()) {
-      return list[head];
-    } else throw new CuaBuida();
+    if (isEmpty()) throw new CuaBuida();
+    return list[head];
   }
 
   @Override
@@ -54,17 +51,14 @@ public class CircularQueue<E> implements TADGenericQueue<E> {
     return size;
   }
 
-  /**
-   * Retorna una string que representa aquesta coleccio.
-   * @return una string que representa aquesta coleccio
-   */
+  @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append('[');
-    for (int i = head; i < head + size; i++) {
-      sb.append(list[i % list.length]);
-      if (i < head + size - 1) sb.append(',').append(' ');
+    if (isEmpty()) return "[]";
+    StringBuilder sb = new StringBuilder(size * 10).append('[');
+    for (int i = head; i < head + size - 1; i++) {
+      sb.append(list[i % list.length].toString()).append(',').append(' ');
     }
-    return sb.append(']').toString();
+    sb.append(list[head + size - 1].toString()).append(']');
+    return sb.toString();
   }
 }
