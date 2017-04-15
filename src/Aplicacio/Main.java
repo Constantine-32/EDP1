@@ -196,7 +196,7 @@ public class Main {
         try {
           queue.add(Character.getNumericValue(key.charAt(i)));
         } catch (CuaPlena e) {
-          System.out.println(e);
+          System.out.println(e.toString());
         }
       }
     }
@@ -209,12 +209,12 @@ public class Main {
       while (line != null) {
         switch (option2) {
           case 1:
-            if (option == 4) fileout.write(encryptJava(line) + '\n');
-            else fileout.write(encrypt(line) + '\n');
+            if (option == 4) fileout.write(encryptJava(line)+'\n');
+            else fileout.write(encrypt(line)+'\n');
             break;
           case 2:
-            if (option == 4) System.out.println(decryptJava(line) + '\n');
-            else fileout.write(decrypt(line) + '\n');
+            if (option == 4) System.out.println(decryptJava(line)+'\n');
+            else fileout.write(decrypt(line)+'\n');
             break;
           default:
             break;
@@ -224,7 +224,7 @@ public class Main {
       file.close();
       fileout.close();
     } catch (IOException e) {
-      System.out.println("Error amb el fitxer: " + e);
+      System.out.println("Error amb el fitxer: "+e);
     }
 
     // Fi d'execucio.
@@ -232,6 +232,6 @@ public class Main {
     long elapsed = end - start;
 
     // Indica el temps d'execucio.
-    System.out.println("Done! Temps d'execucio: " + elapsed);
+    System.out.println("Done! Temps d'execucio: "+elapsed / 1000000+" ms");
   }
 }
