@@ -202,27 +202,23 @@ public class Main {
     }
 
     // Realitza el xifrat / desxifrat del fitxer.
-    try {
-      BufferedWriter fileout = new BufferedWriter(new FileWriter(
-              filePath.substring(0, filePath.length() - 4) + (option2 == 1 ? "_vX.txt" : "_vD.txt")));
-      String line = file.readLine();
-      while (line != null) {
+    try(BufferedWriter fileout = new BufferedWriter(new FileWriter(new File(
+            filePath.substring(0, filePath.length() - 4) + (option2 == 1 ? "_vX.txt" : "_vD.txt"))))) {
+      String line;
+      while ((line = file.readLine()) != null) {
         switch (option2) {
-          case 1:
-            if (option == 4) fileout.write(encryptJava(line)+'\n');
-            else fileout.write(encrypt(line)+'\n');
-            break;
-          case 2:
-            if (option == 4) System.out.println(decryptJava(line)+'\n');
-            else fileout.write(decrypt(line)+'\n');
-            break;
-          default:
-            break;
+        case 1:
+          if (option == 4) fileout.write(encryptJava(line)+'\n');
+          else fileout.write(encrypt(line)+'\n');
+          break;
+        case 2:
+          if (option == 4) System.out.println(decryptJava(line)+'\n');
+          else fileout.write(decrypt(line)+'\n');
+          break;
+        default:
         }
-        line = file.readLine();
       }
       file.close();
-      fileout.close();
     } catch (IOException e) {
       System.out.println("Error amb el fitxer: "+e);
     }
