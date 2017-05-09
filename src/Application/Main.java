@@ -1,6 +1,6 @@
-package Aplicacio;
+package Application;
 
-import Dades.*;
+import DataStructures.*;
 import Exceptions.*;
 
 import java.io.*;

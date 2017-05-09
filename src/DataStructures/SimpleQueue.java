@@ -1,39 +1,36 @@
-package Dades;
+package DataStructures;
 
 import Exceptions.*;
 
-public class CircularQueue<E> implements TADGenericQueue<E> {
+public class SimpleQueue<E> implements TADGenericQueue<E> {
   private E[] list;
   private int size;
-  private int head;
 
   @SuppressWarnings("unchecked")
-  public CircularQueue(int dim) {
-    list = (E[])new Object[dim];
+  public SimpleQueue(int dim) {
+    list = (E[]) new Object[dim];
     size = 0;
-    head = 0;
   }
 
   @Override
   public void add(E e) throws CuaPlena {
     if (isFull()) throw new CuaPlena();
-    list[(head + size) % list.length] = e;
-    size++;
+    list[size++] = e;
   }
 
   @Override
   public E remove() throws CuaBuida {
     if (isEmpty()) throw new CuaBuida();
-    E aux = list[head];
-    head = (head + 1) % list.length;
+    E aux = list[0];
     size--;
+    System.arraycopy(list, 1, list, 0, size);
     return aux;
   }
 
   @Override
   public E peek() throws CuaBuida {
     if (isEmpty()) throw new CuaBuida();
-    return list[head];
+    return list[0];
   }
 
   @Override
@@ -55,10 +52,10 @@ public class CircularQueue<E> implements TADGenericQueue<E> {
   public String toString() {
     if (isEmpty()) return "[]";
     StringBuilder sb = new StringBuilder(size * 10).append('[');
-    for (int i = head; i < head + size - 1; i++) {
-      sb.append(list[i % list.length].toString()).append(',').append(' ');
+    for (int i = 0; i < size - 1; i++) {
+      sb.append(list[i].toString()).append(',').append(' ');
     }
-    sb.append(list[head + size - 1].toString()).append(']');
+    sb.append(list[size - 1].toString()).append(']');
     return sb.toString();
   }
 }
